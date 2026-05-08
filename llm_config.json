@@ -1,0 +1,31 @@
+{
+  "enabled": true,
+  "active_profile": "siliconflow_flash",
+  "profiles": {
+    "siliconflow_flash": {
+      "provider": "siliconflow",
+      "base_url": "https://api.siliconflow.cn/v1",
+      "model": "deepseek-ai/DeepSeek-V4-Flash",
+      "api_key": "",
+      "api_key_env": "SILICONFLOW_API_KEY"
+    },
+    "deepseek_pro_official": {
+      "provider": "deepseek_official",
+      "base_url": "https://api.deepseek.com",
+      "model": "deepseek-v4-pro",
+      "api_key": "",
+      "api_key_env": "DEEPSEEK_API_KEY"
+    }
+  },
+  "temperature": 0.1,
+  "response_format_json": true,
+  "trigger_interval_sec": 10.0,
+  "trigger_interval_frames": 500,
+  "trigger_on_events": true,
+  "deepseek_reasoning_effort": "high",
+  "deepseek_enable_thinking": true,
+  "heartbeat_interval_sec": 5.0,
+  "llm_request_timeout_sec": 240.0,
+  "llm_debug_logs": true,
+  "llm_env_file": "llm.env"
+}

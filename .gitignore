@@ -1,0 +1,25 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local environment secrets
+llm.env
+*.env
+
+# Runtime artifacts
+llm_state_stream.jsonl
+llm_worker.log
+main_run.log
+*.log
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
