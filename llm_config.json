@@ -1,7 +1,14 @@
 {
   "enabled": true,
-  "active_profile": "siliconflow_flash",
+  "active_profile": "dmx_api",
   "profiles": {
+    "dmx_api": {
+      "provider": "dmxapi",
+      "base_url": "https://www.dmxapi.cn/v1",
+      "model": "gpt-5.4",
+      "api_key": "",
+      "api_key_env": "DMX_API_KEY"
+    },
     "siliconflow_flash": {
       "provider": "siliconflow",
       "base_url": "https://api.siliconflow.cn/v1",

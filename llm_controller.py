@@ -153,10 +153,15 @@ def _llm_worker_loop(request_q: Queue, response_q: Queue) -> None:
             client_timeout = float(req.get("timeout", 120.0))  # Use explicit timeout
             _wlog(f"calling API model={req['model']} base_url={req['base_url']} timeout={client_timeout}s")
             
+            import httpx
+            
+            # Disable proxy automatically in the worker to prevent SSL EOF errors 
+            # with domestic API wrappers (like DMXAPI/SiliconFlow) when a VPN is running.
             client = OpenAI(
                 api_key=req["api_key"] or os.environ.get(req["api_key_env"], ""),
                 base_url=req["base_url"],
                 timeout=client_timeout,
+                http_client=httpx.Client(trust_env=False),
             )
             kwargs: dict[str, Any] = dict(
                 model=req["model"],
@@ -212,6 +217,8 @@ def _llm_worker_loop(request_q: Queue, response_q: Queue) -> None:
             print(f"[LLM WORKER] 请求完成 request_id={req_id}，结果已返回主进程。")
             _wlog(f"response queued for request_id={req_id}")
         except Exception as e:
+            import traceback
+            tb_str = traceback.format_exc()
             response_q.put(
                 {
                     "ok": False,
@@ -219,10 +226,11 @@ def _llm_worker_loop(request_q: Queue, response_q: Queue) -> None:
                     "trigger_reason": req.get("trigger_reason", "unknown"),
                     "request_id": req.get("request_id", -1),
                     "error": str(e),
+                    "traceback": tb_str
                 }
             )
-            print(f"[LLM WORKER] 请求失败 request_id={req.get('request_id', -1)} error={e}")
-            _wlog(f"request failed request_id={req.get('request_id', -1)} error={e}")
+            print(f"[LLM WORKER] 请求失败 request_id={req.get('request_id', -1)} error={e}\n{tb_str}")
+            _wlog(f"request failed request_id={req.get('request_id', -1)} error={e}\n{tb_str}")
 
 
 class LLMController:

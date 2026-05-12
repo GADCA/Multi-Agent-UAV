@@ -36,6 +36,7 @@ Copy-Item .\llm.env.example .\llm.env
 ```dotenv
 SILICONFLOW_API_KEY=你的_siliconflow_key
 DEEPSEEK_API_KEY=你的_deepseek_key
+DMX_API_KEY=你的_dmx_key
 ```
 
 > 注意：`llm.env` 已在 `.gitignore` 中，默认不会上传到仓库。
